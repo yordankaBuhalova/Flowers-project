@@ -15,7 +15,7 @@
 
                 </div>
                 <div class="form-group">
-                    <label for="price">Цена</label>
+                    <label for="price">Цена в лв:</label>
                     <input  class="form-control" id="exampleInputPassword1">
                 </div>
                 <div class="form-group">

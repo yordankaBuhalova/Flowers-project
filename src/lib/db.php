@@ -1,12 +1,18 @@
 <?php
     class DB {
-        private $DB_SERVER = getenv('MYSQL_SERVER');
-        private $DB_NAME = getenv('MYSQL_DATABASE');
-        private $DB_USER = getenv('MYSQL_USER');
-        private $DB_PASS = getenv('MYSQL_PASSWORD');
+        private $DB_SERVER;
+        private $DB_NAME;
+        private $DB_USER;
+        private $DB_PASS;
         private $conn;
 
         function __construct() {
+            // Get values from env
+            $this->DB_SERVER = getenv('MYSQL_SERVER');
+            $this->DB_NAME = getenv('MYSQL_DATABASE');
+            $this->DB_USER = getenv('MYSQL_USER');
+            $this->DB_PASS = getenv('MYSQL_PASSWORD');
+
             // Create connection
             $this->conn = new mysqli($this->DB_SERVER, $this->DB_USER, $this->DB_PASS, $this->DB_NAME);
 
@@ -22,7 +28,12 @@
             $res = $this->conn->query($sql);
 
             if($res->num_rows > 0) {
-                return $res;
+                $result = array();
+                while($row = $res->fetch_assoc())
+                {
+                    array_push($result, $row);
+                }
+                return $result;
             } else {
                 return null;
             }

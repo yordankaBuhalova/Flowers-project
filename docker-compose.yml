@@ -11,7 +11,7 @@ services:
       MYSQL_USER: flowers
       MYSQL_PASSWORD: flowers
   web:
-    image: php:7.3-apache
+    build: .
     ports:
       - 8080:80
     volumes:

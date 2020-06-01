@@ -14,36 +14,28 @@
     <h4>Актуално:</h4>
 
     <div class="row">
+        <?php
+            include_once 'lib/db.php';
+            $db = new DB();
+            $bouquets = $db->get("SELECT * FROM product ORDER BY idproduct DESC LIMIT 3");
+            if($bouquets):
+                foreach($bouquets as $key => $value ):
+        ?>
         <div class="col-sm-3 m-3">
             <div class="card " style="width: 18rem;">
                 <img src="./assets/img/bojur.jpg" class="card-img-top" alt="..." weight="100" height="280">
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="item.php" class="btn btn-primary" >За повече информация</a>
+                    <h5 class="card-title"><?php echo $value["name"]; ?></h5>
+                    <p class="card-text">Цена:<?php echo $value["price"]; ?></p>
+<a href="item.php?id=<?php echo $value["idproduct"]; ?>" class="btn btn-primary" >За повече информация</a>
                 </div>
             </div>
         </div>
-        <div class="col-sm-3 m-3">
-            <div class="card" style="width: 18rem;">
-                <img src="./assets/img/bojur.jpg" class="card-img-top" alt="..." weight="100" height="280">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="item.php" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-3 m-3">
-            <div class="card" style="width: 18rem;">
-                <img src="./assets/img/bojur.jpg" class="card-img-top" alt="..." weight="100" height="280">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="item.php" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-        </div>
+
+        <?php
+            endforeach;
+            endif;
+        ?>
     </div>
 </div>
 
