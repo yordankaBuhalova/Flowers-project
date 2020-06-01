@@ -18,3 +18,7 @@ services:
       - ./src:/var/www/html
     links:
       - db
+    environment:
+      MYSQL_DATABASE: flowers
+      MYSQL_USER: flowers
+      MYSQL_PASSWORD: flowers
