@@ -1,5 +1,5 @@
 <?php
-    include 'components/header.php';
+    include 'includes/header.inc';
 ?>
 <div class="container contb">
     <h4>Добави Артикул</h4>
@@ -39,5 +39,5 @@
     </div>
 </div>
 <?php
-    include 'components/footer.php';
+    include 'includes/footer.inc';
 ?>

@@ -1,5 +1,5 @@
 <?php
-    include 'components/header.php';
+    include 'includes/header.inc';
 ?>
 <div class="container contb">
     <br>
@@ -71,5 +71,5 @@
     </div>
 </div>
 <?php
-    include 'components/footer.php';
+    include 'includes/footer.inc';
 ?>

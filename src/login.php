@@ -1,5 +1,5 @@
 <?php
-    include 'components/header.php';
+    include 'includes/header.inc';
 ?>
 <div class="container cont">
 <br>
@@ -19,5 +19,5 @@
   <button type="submit" class="btn btn-primary">Вход</button>
 </form>
 <?php
-    include 'components/footer.php';
+    include 'includes/footer.inc';
 ?>

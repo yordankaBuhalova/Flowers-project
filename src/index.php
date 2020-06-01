@@ -1,5 +1,5 @@
 <?php
-    include 'components/header.php';
+    include 'includes/header.inc';
 ?>
 <div class="container justify-content-center cont">
     <div class="jumbotron jumbotron-fluid">
@@ -48,5 +48,5 @@
 </div>
 
 <?php
-    include 'components/footer.php';
+    include 'includes/footer.inc';
 ?>
