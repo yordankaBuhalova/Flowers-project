@@ -2,36 +2,39 @@
     include 'includes/header.inc';
 ?>
 <div class="container contb">
-    <h4>Добави Артикул</h4>
+    <?php
+        include_once 'lib/db.php';
+        $db = new DB();
+        $type = htmlspecialchars($_GET['type']);
+
+    ?>
+    <h4>Добави Артикул в <?php echo $type ?></h4>
     <br>
     <div class="media">
 
         <div class="media-body col-6">
 
-            <form>
+            <form method="POST" action="">
                 <div class="form-group">
                     <label for="name">Име</label>
-                    <input type="text" class="form-control"  >
-
+                    <input name="name" type="text" class="form-control" id="name" value>
                 </div>
                 <div class="form-group">
                     <label for="price">Цена в лв:</label>
-                    <input  class="form-control" id="exampleInputPassword1">
+                    <input  name="price" class="form-control" type=number id="price"value >
                 </div>
                 <div class="form-group">
-                    <label for="type">Тип</label>
-                    <select class="form-control" id="type">
-                        <option>Букети</option>
-                        <option>Арт букети</option>
-                        <option>Стайни растения</option>
-                    </select>
+                    <label for="pic_url">Име на снимка:</label>
+                    <input name="pic_url" class="form-control" id="pic_url" value>
                 </div>
+                <input hidden class="form-control" id="type" value =<?php echo $type ?>>
                 <div class="form-group">
                     <label for="description">Описание</label>
-                    <textarea type="text" class="form-control" rows="5" id="description"></textarea>
+                    <textarea name="description" type="text" class="form-control" rows="5" id="description"></textarea>
                 </div>
                 <button type="button" class="btn btn-primary">Откажи се</button>
-                <button type="button" class="btn btn-primary">Запази</button>
+                <input type="hidden" id="actualDate" name="actualDate"/>
+                <button type="submit" class="btn btn-primary">Запази</button>
 
             </form>
 
@@ -40,4 +43,16 @@
 </div>
 <?php
     include 'includes/footer.inc';
+?>
+
+<?php
+if (!empty($_POST)) {
+    echo "in";
+
+    $current_user =  get_current_user();
+    $current_user =$db->get("SELECT idadmin FROM user WHERE username=$current_u");
+    $createdate =  time();
+    $sql = "INSERT INTO product(name,price,type,description,pic_url,admin_idadmin,created_date) VALUES ('".$_POST["name"]."','".$_POST["price"]."','".$type."' ,'".$_POST["description"]."','".$_POST["pic_url"]."' ,'".$current_user[0]."','".$createdate."' )";
+    $db->insert($sql);
+}
 ?>

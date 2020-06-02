@@ -2,6 +2,11 @@
     include 'includes/header.inc';
 ?>
 <div class="container contb">
+    <?php
+        include_once 'lib/db.php';
+        $db = new DB();
+        $id = (int)$_GET['id'];
+    ?>
     <div class="row">
         <div class="col-1.5">
            <h4>Букет</h4>
@@ -52,15 +57,13 @@
 
         <div class="media">
             <?php
-                include_once 'lib/db.php';
-                $db = new DB();
-                $id = (int)$_GET['id'];
+
                 $product = $db->get("SELECT * FROM product WHERE idproduct=$id");
                 $products = $db->get("SELECT * FROM product");
                 if($product):
             ?>
 
-            <img src="./assets/img/bojur.jpg" class="align-self-start mr-3" alt="..."weight="100" height="250">
+            <img src="./assets/img/<?php echo $product[0]["pic_url"]; ?>" class="align-self-start mr-3" alt="..."weight="100" height="250">
             <div class="media-body">
                 <h5 class="mt-0"><?php echo $product[0]["name"]; ?></h5>
                 <p>Цена:<?php echo $product[0]["price"];?>лв.</p>
