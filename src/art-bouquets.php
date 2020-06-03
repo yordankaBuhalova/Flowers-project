@@ -1,4 +1,5 @@
 <?php
+    session_start();
     include 'includes/header.inc';
 ?>
 <div class="container contb">
@@ -8,7 +9,9 @@
             <h4>Арт букети</h4>
         </div>
         <div class="col-6">
-
+        <?php
+            if(!empty($_SESSION)):
+        ?>
             <a type="button" class="btn btn-link edit-btn" href="add-item.php?type=art_bouquet">
                 <svg class="bi bi-plus" width="2.5em" height="2.5em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z"/>
@@ -16,7 +19,9 @@
                 </svg>
             </a>
         </div>
-
+        <?php
+            endif;
+        ?>
     <div class="row">
         <?php
             include_once 'lib/db.php';

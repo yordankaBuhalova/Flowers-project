@@ -1,4 +1,6 @@
 <?php
+    session_start();
+    if(!empty($_SESSION)):
     include 'includes/header.inc';
 ?>
 <div class="container contb">
@@ -51,4 +53,9 @@
 </div>
 <?php
     include 'includes/footer.inc';
+?>
+<?php
+    else:
+        echo "Not allowed";
+    endif;
 ?>

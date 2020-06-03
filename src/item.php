@@ -1,4 +1,5 @@
 <?php
+    session_start();
     include 'includes/header.inc';
 ?>
 <div class="container contb">
@@ -12,6 +13,9 @@
            <h4>Букет</h4>
            <br>
         </div>
+        <?php
+            if(!empty($_SESSION)):
+        ?>
         <div class="col-6">
             <a type="button" class="btn btn-link edit-btn" href="edit-item.php?id=<?php echo (int)$_GET['id'];?>">
                 <svg class="bi bi-pen" width="1.5em" height="1.5em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -50,6 +54,10 @@
                 </div>
             </div>
         </div>
+        <?php
+            endif;
+        ?>
+
 
 
     </div>

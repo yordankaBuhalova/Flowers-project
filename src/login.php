@@ -1,5 +1,7 @@
 <?php
+    ob_start();
     session_start();
+    if(empty($_SESSION)):
     include 'includes/header.inc';
 ?>
 <div class="container cont">
@@ -16,38 +18,29 @@
       <input type="password" class="form-control" name="password">
     </div>
 
-    <button type="submit" class="btn btn-primary">Вход</button>
+    <button type="submit" titel="Login" class="btn btn-primary" >Вход</button>
   </form>
-  Click here to clean <a href = "login.php" tite = "Logout">Session.
 </div>
 <?php
     include 'includes/footer.inc';
 ?>
 
 <?php
-
-if(!empty($_POST)) {
-  include_once 'lib/db.php';
-  $db = new DB();
-  $sql = "SELECT * FROM user WHERE username='" . $_POST["username"] . "' AND password='" . sha1($_POST["password"]) . "'";
-  $user = $db->get($sql);
-  if(!empty($user)) {
-    $_SESSION["user_id"] = $user["idadmin"];
-    $_SESSION["user"] = $user["username"];
-    header("Location: index.php");
+  if(!empty($_POST)) {
+    include_once 'lib/db.php';
+    $db = new DB();
+    $sql = "SELECT * FROM user WHERE username='" . $_POST["username"] . "' AND password='" . sha1($_POST["password"]) . "'";
+    $user = $db->get($sql);
+    if(!empty($user)) {
+      $_SESSION["user_id"] = $user[0]["idadmin"];
+      $_SESSION["user"] = $user[0]["username"];
+      header("location: index.php");
+    }
   }
-
-}
-
 ?>
 
 <?php
-/*
-   session_start();
-   unset($_SESSION["username"]);
-   unset($_SESSION["password"]);
-
-   echo 'You have cleaned session';
-   header('Refresh: 2; URL = login.php');
-*/
+    else:
+        header("location: index.php");
+    endif;
 ?>

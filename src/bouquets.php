@@ -1,4 +1,5 @@
 <?php
+    session_start();
     include 'includes/header.inc';
 ?>
 <div class="container contb">
@@ -14,8 +15,7 @@
         </div>
         <div class="col-6">
         <?php
-
-
+            if(!empty($_SESSION)):
         ?>
             <a type="button" class="btn btn-link edit-btn" href="add-item.php?type=<?php echo $products[0]["type"]; ?>">
                 <svg class="bi bi-plus" width="2.5em" height="2.5em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -23,7 +23,9 @@
                     <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z"/>
                 </svg>
             </a>
-
+        <?php
+            endif;
+        ?>
         </div>
 
 </div>

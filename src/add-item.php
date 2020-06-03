@@ -1,5 +1,7 @@
 <?php
-    include 'includes/header.inc';
+    session_start();
+    if(!empty($_SESSION)):
+        include 'includes/header.inc';
 ?>
 <div class="container contb">
     <?php
@@ -46,13 +48,15 @@
 ?>
 
 <?php
-if (!empty($_POST)) {
-    echo "in";
-
-    $current_user =  get_current_user();
-    $current_user =$db->get("SELECT idadmin FROM user WHERE username=$current_u");
-    $createdate =  time();
-    $sql = "INSERT INTO product(name,price,type,description,pic_url,admin_idadmin,created_date) VALUES ('".$_POST["name"]."','".$_POST["price"]."','".$type."' ,'".$_POST["description"]."','".$_POST["pic_url"]."' ,'".$current_user[0]."','".$createdate."' )";
-    $db->insert($sql);
-}
+    if (!empty($_POST)) {
+        $current_user = $_SESSION["user_id"];
+        $createdate =  date('Y-m-d');
+        $sql = "INSERT INTO product(name,price,type,description,pic_url,admin_idadmin,created_date) VALUES ('".$_POST["name"]."','".$_POST["price"]."','".$type."' ,'".$_POST["description"]."','".$_POST["pic_url"]."' ,'".$current_user."','".$createdate."' )";
+        $db->insert($sql);
+    }
+?>
+<?php
+    else:
+        echo "Not allowed";
+    endif;
 ?>

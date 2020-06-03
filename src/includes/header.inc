@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,6 +34,18 @@
             <li class="nav-item">
                 <a class="nav-link" href="room-plants.php">Стайни растения</a>
             </li>
+            <?php
+                if(!empty($_SESSION)):
+            ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="poruchki.php">Поръчки</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="logout.php">Изход</a>
+                </li>
+            <?php
+                endif;
+            ?>
             </ul>
         </div>
     </nav></div>
