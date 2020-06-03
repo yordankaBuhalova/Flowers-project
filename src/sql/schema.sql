@@ -11,15 +11,15 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- Table `user`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `user` (
-  `idadmin` INT NOT NULL,
-  `username` VARCHAR(45) NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(45) UNIQUE NOT NULL,
   `password` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
   `first_name` VARCHAR(45) NOT NULL,
   `last_name` VARCHAR(45) NOT NULL,
   `is_admin` TINYINT NULL,
-  PRIMARY KEY (`idadmin`),
-  UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE)
+  PRIMARY KEY (`id`)
+)
 ENGINE = InnoDB;
 
 
@@ -27,22 +27,17 @@ ENGINE = InnoDB;
 -- Table `product`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `product` (
-  `idproduct` INT NOT NULL,
-  `name` VARCHAR(45) NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) UNIQUE NOT NULL,
   `price` DECIMAL NOT NULL,
   `description` VARCHAR(45) NULL,
   `pic_url` VARCHAR(45) NULL,
-  `admin_idadmin` INT NOT NULL,
+  `user_id` INT NOT NULL,
   `type` ENUM('bouquet', 'art_bouquet', 'houseplant') NULL,
   `created_date` VARCHAR(45) NULL,
-  PRIMARY KEY (`idproduct`),
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE,
-  INDEX `fk_article_admin_idx` (`admin_idadmin` ASC) VISIBLE,
-  CONSTRAINT `fk_article_admin`
-    FOREIGN KEY (`admin_idadmin`)
-    REFERENCES `user` (`idadmin`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+)
 ENGINE = InnoDB;
 
 
@@ -50,22 +45,23 @@ ENGINE = InnoDB;
 -- Table `orders`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `orders` (
-  `idorders` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `product_id` INT NOT NULL,
   `email` VARCHAR(45) NOT NULL,
   `name` VARCHAR(45) NOT NULL,
   `message` LONGTEXT NULL,
   `created` TIMESTAMP NOT NULL,
   `address` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idorders`, `product_id`),
-  INDEX `fk_orders_article1_idx` (`product_id` ASC) VISIBLE,
-  CONSTRAINT `fk_orders_article1`
-    FOREIGN KEY (`product_id`)
-    REFERENCES `product` (`idproduct`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`id`, `product_id`),
+  FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
+)
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Initial admin user
+-- -----------------------------------------------------
+INSERT INTO user(username, password, email, first_name, last_name, is_admin)
+VALUES('admin', SHA1('admin'), '', 'Administrator', '', 1);
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

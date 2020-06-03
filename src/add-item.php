@@ -50,8 +50,8 @@
 <?php
     if (!empty($_POST)) {
         $current_user = $_SESSION["user_id"];
-        $createdate =  date('Y-m-d');
-        $sql = "INSERT INTO product(name,price,type,description,pic_url,admin_idadmin,created_date) VALUES ('".$_POST["name"]."','".$_POST["price"]."','".$type."' ,'".$_POST["description"]."','".$_POST["pic_url"]."' ,'".$current_user."','".$createdate."' )";
+        $createdate =  date('Y-m-d H:i:s');
+        $sql = "INSERT INTO product(name,price,type,description,pic_url,user_id,created_date) VALUES ('".$_POST["name"]."','".$_POST["price"]."','".$type."' ,'".$_POST["description"]."','".$_POST["pic_url"]."' ,'".$current_user."','".$createdate."' )";
         $db->insert($sql);
     }
 ?>

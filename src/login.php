@@ -32,7 +32,7 @@
     $sql = "SELECT * FROM user WHERE username='" . $_POST["username"] . "' AND password='" . sha1($_POST["password"]) . "'";
     $user = $db->get($sql);
     if(!empty($user)) {
-      $_SESSION["user_id"] = $user[0]["idadmin"];
+      $_SESSION["user_id"] = $user[0]["id"];
       $_SESSION["user"] = $user[0]["username"];
       header("location: index.php");
     }

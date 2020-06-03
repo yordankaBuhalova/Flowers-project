@@ -66,7 +66,7 @@
         <div class="media">
             <?php
 
-                $product = $db->get("SELECT * FROM product WHERE idproduct=$id");
+                $product = $db->get("SELECT * FROM product WHERE id=$id");
                 $products = $db->get("SELECT * FROM product");
                 if($product):
             ?>

@@ -38,7 +38,7 @@
                     <h5 class="card-title"><?php echo $value["name"]; ?></h5>
                     <p class="card-text">Цена:<?php echo $value["price"]; ?></p>
                     <p class="card-text">Описание:<?php echo $value["description"]; ?></p>
-                    <a href="item.php" class="btn btn-primary" >За повече информация</a>
+                    <a href="item.php?id=<?php echo $value["id"]; ?>" class="btn btn-primary" >За повече информация</a>
                 </div>
             </div>
         </div>

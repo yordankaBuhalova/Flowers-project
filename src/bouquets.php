@@ -17,7 +17,7 @@
         <?php
             if(!empty($_SESSION)):
         ?>
-            <a type="button" class="btn btn-link edit-btn" href="add-item.php?type=<?php echo $products[0]["type"]; ?>">
+            <a type="button" class="btn btn-link edit-btn" href="add-item.php?type=bouquet">
                 <svg class="bi bi-plus" width="2.5em" height="2.5em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z"/>
                     <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z"/>
@@ -42,7 +42,7 @@
                 <div class="card-body">
                     <h5 class="card-title"><?php echo $value["name"]; ?></h5>
                     <p class="card-text">Цена:<?php echo $value["price"]; ?>лв.</p>
-                    <a href="item.php?id=<?php echo $value["idproduct"]; ?>" class="btn btn-primary" >За повече информация</a>
+                    <a href="item.php?id=<?php echo $value["id"]; ?>" class="btn btn-primary" >За повече информация</a>
                 </div>
             </div>
         </div>

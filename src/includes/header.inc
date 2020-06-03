@@ -38,7 +38,7 @@
                 if(!empty($_SESSION)):
             ?>
                 <li class="nav-item">
-                    <a class="nav-link" href="poruchki.php">Поръчки</a>
+                    <a class="nav-link" href="orders.php">Поръчки</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="logout.php">Изход</a>

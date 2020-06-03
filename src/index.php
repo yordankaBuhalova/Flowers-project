@@ -17,7 +17,7 @@
         <?php
             include_once 'lib/db.php';
             $db = new DB();
-            $bouquets = $db->get("SELECT * FROM product ORDER BY idproduct DESC LIMIT 3");
+            $bouquets = $db->get("SELECT * FROM product ORDER BY id DESC LIMIT 3");
             if($bouquets):
                 foreach($bouquets as $key => $value ):
         ?>
@@ -27,7 +27,7 @@
                 <div class="card-body">
                     <h5 class="card-title"><?php echo $value["name"]; ?></h5>
                     <p class="card-text">Цена:<?php echo $value["price"]; ?></p>
-                    <a href="item.php?id=<?php echo $value["idproduct"]; ?>" class="btn btn-primary" >За повече информация</a>
+                    <a href="item.php?id=<?php echo $value["id"]; ?>" class="btn btn-primary" >За повече информация</a>
                 </div>
             </div>
         </div>
