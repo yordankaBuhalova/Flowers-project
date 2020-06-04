@@ -20,15 +20,15 @@
             <form method="POST" action="">
                 <div class="form-group">
                     <label for="name">Име</label>
-                    <input name="name" type="text" class="form-control" id="name" value>
+                    <input name="name" type="text" class="form-control" id="name" required>
                 </div>
                 <div class="form-group">
                     <label for="price">Цена в лв:</label>
-                    <input  name="price" class="form-control" type=number id="price"value >
+                    <input  name="price" class="form-control" type=number id="price" required>
                 </div>
                 <div class="form-group">
                     <label for="pic_url">Име на снимка:</label>
-                    <input name="pic_url" class="form-control" id="pic_url" value>
+                    <input name="pic_url" class="form-control" id="pic_url">
                 </div>
                 <input hidden class="form-control" id="type" value =<?php echo $type ?>>
                 <div class="form-group">
@@ -50,19 +50,27 @@
 
 <?php
     if (!empty($_POST)) {
+        if(empty($_POST["name"]) || empty($_POST["price"])) {
+            echo "<div class='alert alert-danger' role='alert'>Име и цена са задължителни полета. Моля, опитайте отново!</div>";
+            die();
+        }
+
         $current_user = $_SESSION["user_id"];
         $createdate =  date('Y-m-d H:i:s');
         $sql = "INSERT INTO product(name,price,type,description,pic_url,user_id,deleted,created_date) VALUES ('".$_POST["name"]."','".$_POST["price"]."','".$type."' ,'".$_POST["description"]."','".$_POST["pic_url"]."' ,'".$current_user."',FALSE,'".$createdate."' )";
-        $db->insert($sql);
-
-        if ($type == "bouquet"){
-            header("location: bouquets.php");
+        if($db->insert($sql)) {
+            if ($type == "bouquet"){
+                header("location: bouquets.php");
+            }
+            elseif($type == "art_bouquet"){
+                header("location: art-bouquets.php");
+            }
+            else {
+                header("location: room-plants.php");
+            }
         }
-        elseif($type == "art_bouquet"){
-            header("location: art-bouquets.php");
-        }
-        else{
-            header("location: room-plants.php");
+        else {
+            echo "<div class='alert alert-danger' role='alert'>Нещо се обърка при добавянето на продукта. Моля, опитайте отново!</div>";
         }
     }
 ?>

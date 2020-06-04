@@ -5,6 +5,7 @@
         private $DB_USER;
         private $DB_PASS;
         private $conn;
+        private $LOGGER;
 
         function __construct() {
             // Get values from env
@@ -34,7 +35,8 @@
                     array_push($result, $row);
                 }
                 return $result;
-            } else {
+            }
+            else {
                 return null;
             }
         }
@@ -42,32 +44,28 @@
         function insert($sql) {
             $this->conn->real_escape_string($sql);
 
-            return ($this->conn->query($sql) === TRUE);
+            if ($this->conn->query($sql) === TRUE)
+                return TRUE;
+            else
+                return FALSE;
         }
 
         function update($sql) {
             $this->conn->real_escape_string($sql);
 
-            if ($this->conn->query($sql) === TRUE) {
-                echo "Record updated successfully";
+            if ($this->conn->query($sql) === TRUE)
                 return TRUE;
-              } else {
-                echo "Error updating record: " . $this->conn->error;
+            else
                 return FALSE;
-              }
-
         }
 
         function delete($sql) {
             $this->conn->real_escape_string($sql);
 
-            if ($this->conn->query($sql) === TRUE) {
-                echo "Record deleted successfully";
+            if ($this->conn->query($sql) === TRUE)
                 return TRUE;
-            } else {
-                echo "Error deleting record: " . $this->conn->error;
+            else
                 return FALSE;
-            }
         }
 
         function __destruct() {

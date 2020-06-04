@@ -99,25 +99,25 @@
                         <div class="modal-body">
                             <form method="POST" action="">
                                 <div class="form-group">
-                                    <label for="exampleInputuser1">Име</label>
-                                    <input type="user" name="name" class="form-control" id="exampleInputuser1" aria-describedby="userHelp">
+                                    <label for="name">Име</label>
+                                    <input type="user" name="name" class="form-control" id="name" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputPassword1">Имейл</label>
-                                    <input type="email" name="email" class="form-control" id="exampleInputPassword1">
+                                    <label for="email">Имейл</label>
+                                    <input type="email" name="email" class="form-control" id="email" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputPassword1">Адрес</label>
-                                    <input type="text" name="address" class="form-control" id="exampleInputPassword1">
+                                    <label for="address">Адрес</label>
+                                    <input type="text" name="address" class="form-control" id="address" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputPassword1">Запитване</label>
-                                    <textarea type="text" name="message" class="form-control" rows="5" id="exampleInputPassword1"></textarea>
+                                    <label for="message">Запитване</label>
+                                    <textarea type="text" name="message" class="form-control" rows="5" id="message"></textarea>
                                 </div>
 
                                 <input name="product_id" type="hidden" value=<?php echo $product[0]["id"]; ?>>
                                 <div class="modal-footer">
-                                    <button type="submit" name="edit" class="btn btn-primary">Завърши поръчката</button>
+                                    <button type="submit" name="order" class="btn btn-primary">Завърши поръчката</button>
                                 </div>
                             </form>
                         </div>
@@ -135,22 +135,40 @@
     include 'includes/footer.inc';
 ?>
 <?php
+
     if (isset($_POST['del'])){
         $sql = "UPDATE product SET deleted=TRUE WHERE id='".$id."'";
         if($db->update($sql))
             header("location: index.php");
-        else
-            echo "Нещо се обърка при поръчката. Моля опитайте по-късно.";
+        else {
+            echo "<div class='alert alert-danger' role='alert'>Нещо се обърка при изтриването на продукта. Моля, опитайте отново!</div>";
+            die();
+        }
     }
-?>
-<?php
-    if (!empty($_POST['edit'])) {
-        $current_user = $_SESSION["user_id"];
-        $createdate =  date('Y-m-d H:i:s');
-        $sql = "INSERT INTO orders(product_id,email,name,message,created,address) VALUES ('".$_POST["product_id"]."','".$_POST["email"]."','".$_POST["name"]."' ,'".$_POST["message"]."','".$createdate."','".$_POST["address"]."' )";
-        if($db->insert($sql))
-            header("location: index.php");
-        else
-            echo "Нещо се обърка при поръчката. Моля опитайте по-късно.";
+
+
+    if (isset($_POST['order'])) {
+        if(empty($_POST["name"]) || empty($_POST["email"]) || empty($_POST["address"])) {
+            echo "<div class='alert alert-danger' role='alert'>Име, имейл и адрес са задължителни полета. Моля, опитайте отново!</div>";
+            die();
+        }
+        else if (!preg_match("/^[a-zA-Z ]*$/",$_POST["name"])) {
+            echo "<div class='alert alert-danger' role='alert'>Името не може да съдържа числа и специални символи. Моля, опитайте отново!</div>";
+            die();
+        }
+        else if (!preg_match("/^\S+@\S+\.\S+$/",$_POST["email"])) {
+            echo "<div class='alert alert-danger' role='alert'>Електронната поща е в невалиден формат. Моля, опитайте отново!</div>";
+            die();
+        }
+        else{
+            $current_user = $_SESSION["user_id"];
+            $createdate =  date('Y-m-d H:i:s');
+            $sql = "INSERT INTO orders(product_id,email,name,message,created,address) VALUES ('".$_POST["product_id"]."','".$_POST["email"]."','".$_POST["name"]."' ,'".$_POST["message"]."','".$createdate."','".$_POST["address"]."' )";
+            if($db->insert($sql))
+                header("location: index.php");
+            else
+                echo "<div class='alert alert-danger' role='alert'>Нещо се обърка при поръчката. Моля, опитайте отново!</div>";
+        }
+
     }
 ?>
