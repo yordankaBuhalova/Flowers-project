@@ -42,11 +42,7 @@
         function insert($sql) {
             $this->conn->real_escape_string($sql);
 
-            if ($this->conn->query($sql) === TRUE) {
-                echo "New record created successfully";
-              } else {
-                echo "Error: " . $sql . "<br>" . $conn->error;
-              }
+            return ($this->conn->query($sql) === TRUE);
         }
 
         function update($sql) {
@@ -54,8 +50,10 @@
 
             if ($this->conn->query($sql) === TRUE) {
                 echo "Record updated successfully";
+                return TRUE;
               } else {
-                echo "Error updating record: " . $conn->error;
+                echo "Error updating record: " . $this->conn->error;
+                return FALSE;
               }
 
         }
@@ -65,8 +63,10 @@
 
             if ($this->conn->query($sql) === TRUE) {
                 echo "Record deleted successfully";
+                return TRUE;
             } else {
-                echo "Error deleting record: " . $conn->error;
+                echo "Error deleting record: " . $this->conn->error;
+                return FALSE;
             }
         }
 

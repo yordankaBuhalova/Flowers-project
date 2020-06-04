@@ -1,4 +1,5 @@
 <?php
+    ob_start();
     session_start();
     include 'includes/header.inc';
 ?>
@@ -45,10 +46,14 @@
                         </div>
                         <div class="modal-body">
                             Сигурни ли сте, че искате да изтриете?
+
                         </div>
                         <div class="modal-footer">
+                        <form method="POST" action="">
 
-                            <button type="button" class="btn btn-primary">Да</button>
+                            <button type="submit" name="del" class="btn btn-danger">Да</button>
+                        </form>
+
                         </div>
                     </div>
                 </div>
@@ -85,38 +90,37 @@
                 <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="deletel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="deletel">Поръчка на артикул: <?php echo $product[0]["name"]; ?></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="form-group">
-                                <label for="exampleInputuser1">Име</label>
-                                <input type="user" class="form-control" id="exampleInputuser1" aria-describedby="userHelp">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Имейл</label>
-                                <input type="password" class="form-control" id="exampleInputPassword1">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Адрес</label>
-                                <input type="password" class="form-control" id="exampleInputPassword1">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Запитване</label>
-                                <textarea type="text" class="form-control" rows="5" id="exampleInputPassword1"></textarea>
-                            </div>
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deletel">Поръчка на артикул: <?php echo $product[0]["name"]; ?></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="POST" action="">
+                                <div class="form-group">
+                                    <label for="exampleInputuser1">Име</label>
+                                    <input type="user" name="name" class="form-control" id="exampleInputuser1" aria-describedby="userHelp">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Имейл</label>
+                                    <input type="email" name="email" class="form-control" id="exampleInputPassword1">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Адрес</label>
+                                    <input type="text" name="address" class="form-control" id="exampleInputPassword1">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Запитване</label>
+                                    <textarea type="text" name="message" class="form-control" rows="5" id="exampleInputPassword1"></textarea>
+                                </div>
 
-                            <input name="product_id" type="hidden" value=<?php echo $product[0]["idproduct"]; ?>>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-
-                        <button type="button" class="btn btn-primary " data-target="success-page.php">Завърши поръчката</button>
-                    </div>
+                                <input name="product_id" type="hidden" value=<?php echo $product[0]["id"]; ?>>
+                                <div class="modal-footer">
+                                    <button type="submit" name="edit" class="btn btn-primary">Завърши поръчката</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 </div>
@@ -129,4 +133,24 @@
 </div>
 <?php
     include 'includes/footer.inc';
+?>
+<?php
+    if (isset($_POST['del'])){
+        $sql = "UPDATE product SET deleted=TRUE WHERE id='".$id."'";
+        if($db->update($sql))
+            header("location: index.php");
+        else
+            echo "Нещо се обърка при поръчката. Моля опитайте по-късно.";
+    }
+?>
+<?php
+    if (!empty($_POST['edit'])) {
+        $current_user = $_SESSION["user_id"];
+        $createdate =  date('Y-m-d H:i:s');
+        $sql = "INSERT INTO orders(product_id,email,name,message,created,address) VALUES ('".$_POST["product_id"]."','".$_POST["email"]."','".$_POST["name"]."' ,'".$_POST["message"]."','".$createdate."','".$_POST["address"]."' )";
+        if($db->insert($sql))
+            header("location: index.php");
+        else
+            echo "Нещо се обърка при поръчката. Моля опитайте по-късно.";
+    }
 ?>

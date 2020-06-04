@@ -17,7 +17,7 @@
         <?php
             include_once 'lib/db.php';
             $db = new DB();
-            $bouquets = $db->get("SELECT * FROM product ORDER BY id DESC LIMIT 3");
+            $bouquets = $db->get("SELECT * FROM product WHERE deleted=FALSE ORDER BY id DESC LIMIT 3");
             if($bouquets):
                 foreach($bouquets as $key => $value ):
         ?>

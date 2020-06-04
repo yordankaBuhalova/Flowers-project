@@ -26,7 +26,7 @@
         <?php
             include_once 'lib/db.php';
             $db = new DB();
-            $art_bouquets = $db->get("SELECT * FROM product WHERE type='art_bouquet'");
+            $art_bouquets = $db->get("SELECT * FROM product WHERE type='art_bouquet' AND deleted=FALSE");
             if($art_bouquets):
                 foreach($art_bouquets as $key => $value ):
         ?>

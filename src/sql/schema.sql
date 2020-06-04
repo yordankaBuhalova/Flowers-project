@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS `product` (
   `pic_url` VARCHAR(45) NULL,
   `user_id` INT NOT NULL,
   `type` ENUM('bouquet', 'art_bouquet', 'houseplant') NULL,
+  `deleted` BOOLEAN NOT NULL,
   `created_date` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)

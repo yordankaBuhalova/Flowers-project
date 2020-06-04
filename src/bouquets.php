@@ -6,7 +6,7 @@
     <?php
         include_once 'lib/db.php';
         $db = new DB();
-        $products = $db->get("SELECT * FROM product WHERE type='bouquet'");
+        $products = $db->get("SELECT * FROM product WHERE type='bouquet' AND deleted=FALSE");
     ?>
     <br>
     <div class="row">

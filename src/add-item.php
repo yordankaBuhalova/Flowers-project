@@ -1,4 +1,5 @@
 <?php
+    ob_start();
     session_start();
     if(!empty($_SESSION)):
         include 'includes/header.inc';
@@ -51,10 +52,22 @@
     if (!empty($_POST)) {
         $current_user = $_SESSION["user_id"];
         $createdate =  date('Y-m-d H:i:s');
-        $sql = "INSERT INTO product(name,price,type,description,pic_url,user_id,created_date) VALUES ('".$_POST["name"]."','".$_POST["price"]."','".$type."' ,'".$_POST["description"]."','".$_POST["pic_url"]."' ,'".$current_user."','".$createdate."' )";
+        $sql = "INSERT INTO product(name,price,type,description,pic_url,user_id,deleted,created_date) VALUES ('".$_POST["name"]."','".$_POST["price"]."','".$type."' ,'".$_POST["description"]."','".$_POST["pic_url"]."' ,'".$current_user."',FALSE,'".$createdate."' )";
         $db->insert($sql);
+
+        if ($type == "bouquet"){
+            header("location: bouquets.php");
+        }
+        elseif($type == "art_bouquet"){
+            header("location: art-bouquets.php");
+        }
+        else{
+            header("location: room-plants.php");
+        }
     }
 ?>
+
+
 <?php
     else:
         echo "Not allowed";

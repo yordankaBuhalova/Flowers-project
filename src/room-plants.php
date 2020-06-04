@@ -27,7 +27,7 @@
         <?php
             include_once 'lib/db.php';
             $db = new DB();
-            $plants = $db->get("SELECT * FROM product WHERE type='houseplant'");
+            $plants = $db->get("SELECT * FROM product WHERE type='houseplant' AND deleted=FALSE");
             if($plants):
                 foreach($plants as $key => $value ):
         ?>
