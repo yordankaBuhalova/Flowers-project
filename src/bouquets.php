@@ -1,4 +1,5 @@
 <?php
+    // Страница за списък с артикули от тип букет
     session_start();
     include 'includes/header.inc';
 ?>
@@ -6,6 +7,7 @@
     <?php
         include_once 'lib/db.php';
         $db = new DB();
+        // Заявка за извличане на информацията за артикули от тип букет
         $products = $db->get("SELECT * FROM product WHERE type='bouquet' AND deleted=FALSE");
     ?>
     <br>
@@ -15,6 +17,7 @@
         </div>
         <div class="col-6">
         <?php
+        // Бутон за добавяне на нов артикул от типа. Видим само за администраторите.
             if(!empty($_SESSION)):
         ?>
             <a type="button" class="btn btn-link edit-btn" href="add-item.php?type=bouquet">
@@ -31,7 +34,7 @@
 </div>
     <div class="row">
         <?php
-
+            // За всеки артикул от типа се създава карта с информацията за него
             if($products):
                 foreach($products as $key => $value ):
         ?>
@@ -41,7 +44,7 @@
                 <img src="./assets/img/<?php echo $value["pic_url"]; ?>" class="card-img-top" alt="..." weight="100" height="250">
                 <div class="card-body">
                     <h5 class="card-title"><?php echo $value["name"]; ?></h5>
-                    <p class="card-text">Цена:<?php echo $value["price"]; ?>лв.</p>
+                    <p class="card-text">Цена: <?php echo $value["price"]; ?>лв.</p>
                     <a href="item.php?id=<?php echo $value["id"]; ?>" class="btn btn-primary" >За повече информация</a>
                 </div>
             </div>

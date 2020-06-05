@@ -8,30 +8,31 @@
         private $LOGGER;
 
         function __construct() {
-            // Get values from env
+            // Взимане на променливи от средата
             $this->DB_SERVER = getenv('MYSQL_SERVER');
             $this->DB_NAME = getenv('MYSQL_DATABASE');
             $this->DB_USER = getenv('MYSQL_USER');
             $this->DB_PASS = getenv('MYSQL_PASSWORD');
 
-            // Create connection
+            // Създаване на връзката
             $this->conn = new mysqli($this->DB_SERVER, $this->DB_USER, $this->DB_PASS, $this->DB_NAME);
 
-            // Check connection
+            // Проверка на връзката
             if (!$this->conn) {
                 die("Connection failed: " . mysqli_connect_error());
             }
         }
 
         function get($sql) {
+            // метод за извличане на информация от базата
             $this->conn->real_escape_string($sql);
 
             $res = $this->conn->query($sql);
 
             if($res->num_rows > 0) {
+                // резултатите се вкарват в масив (ако има такива)
                 $result = array();
-                while($row = $res->fetch_assoc())
-                {
+                while($row = $res->fetch_assoc()) {
                     array_push($result, $row);
                 }
                 return $result;
@@ -41,31 +42,12 @@
             }
         }
 
-        function insert($sql) {
+        function exec($sql) {
+            // метод за изпълняване на заявки без връщане на резултат - insert, update, delete
             $this->conn->real_escape_string($sql);
 
-            if ($this->conn->query($sql) === TRUE)
-                return TRUE;
-            else
-                return FALSE;
-        }
-
-        function update($sql) {
-            $this->conn->real_escape_string($sql);
-
-            if ($this->conn->query($sql) === TRUE)
-                return TRUE;
-            else
-                return FALSE;
-        }
-
-        function delete($sql) {
-            $this->conn->real_escape_string($sql);
-
-            if ($this->conn->query($sql) === TRUE)
-                return TRUE;
-            else
-                return FALSE;
+            // връщаме дали заявката е завършила успешно
+            return ($this->conn->query($sql) === TRUE);
         }
 
         function __destruct() {

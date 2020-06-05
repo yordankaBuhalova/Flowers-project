@@ -1,4 +1,5 @@
 <?php
+    // Страница за списък с артикули от тип стайно растение
     session_start();
     include 'includes/header.inc';
 ?>
@@ -10,6 +11,7 @@
         </div>
         <div class="col-6">
         <?php
+            // Бутон за добавяне на нов артикул от типа. Видим само за администраторите.
             if(!empty($_SESSION)):
         ?>
             <a type="button" class="btn btn-link edit-btn" href="add-item.php?type=houseplant">
@@ -27,17 +29,19 @@
         <?php
             include_once 'lib/db.php';
             $db = new DB();
+            // Заявка за извличане на информацията за артикули от тип букет
             $plants = $db->get("SELECT * FROM product WHERE type='houseplant' AND deleted=FALSE");
+            // За всеки артикул от типа се създава карта с информацията за него
             if($plants):
                 foreach($plants as $key => $value ):
         ?>
         <div class="col-sm-3 mt-5">
             <div class="card " style="width: 16rem;">
-                <img src="./assets/img/bojur.jpg" class="card-img-top" alt="..." weight="100" height="250">
+                <img src="./assets/img/<?php echo $value["pic_url"]; ?>" class="card-img-top" alt="..." weight="100" height="250">
                 <div class="card-body">
                     <h5 class="card-title"><?php echo $value["name"]; ?></h5>
-                    <p class="card-text">Цена:<?php echo $value["price"]; ?></p>
-                    <p class="card-text">Описание:<?php echo $value["description"]; ?></p>
+                    <p class="card-text">Цена: <?php echo $value["price"]; ?>лв.</p>
+                    <p class="card-text">Описание: <?php echo $value["description"]; ?></p>
                     <a href="item.php?id=<?php echo $value["id"]; ?>" class="btn btn-primary" >За повече информация</a>
                 </div>
             </div>

@@ -73,3 +73,12 @@ button.edit-btn{
 .js-focus-visible :focus:not(.focus-visible) {
     outline: none!important;
   }
+.modal-header{
+    background-color: #4688F0 !important;
+}
+h4{
+    padding-top: 6px;
+}
+.table td, .table th{
+    vertical-align:middle;
+}

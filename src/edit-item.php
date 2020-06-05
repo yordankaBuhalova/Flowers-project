@@ -1,6 +1,8 @@
 <?php
+    // Страница за редакция на артикули
     ob_start();
     session_start();
+    // Проверка за логнат администратор
     if(!empty($_SESSION)):
     include 'includes/header.inc';
 ?>
@@ -11,7 +13,9 @@
         <?php
             include_once 'lib/db.php';
             $db = new DB();
+            // пк на продукта
             $id = (int)$_GET['id'];
+            // заявка за извличане на продукта от базата
             $product = $db->get("SELECT * FROM product WHERE id=$id");
             if($product):
         ?>
@@ -35,6 +39,7 @@
                 <div class="form-group">
                     <label for="type">Тип</label>
                     <select class="form-control" id="type" name="type" required>
+                        <!-- Селектиране на конкретния тип -->
                         <option value ="bouquet" <?php if($product[0]["type"] === "bouquet"): ?> selected <?php endif; ?>>Букети</option>
                         <option value ="art_bouquet" <?php if($product[0]["type"] === "art_bouquet"): ?> selected <?php endif; ?>>Арт букети</option>
                         <option value ="houseplant" <?php if($product[0]["type"] === "houseplant"): ?> selected <?php endif; ?>>Стайни растения</option>
@@ -56,15 +61,19 @@
     include 'includes/footer.inc';
 ?>
 <?php
+    // Валидация на формата за редакция
     if (!empty($_POST)) {
+        // Проверка за наличност на данни в задължителните полета
         if(empty($_POST["name"]) || empty($_POST["price"]) || empty($_POST["type"])) {
             echo "<div class='alert alert-danger' role='alert'>Име, цена и тип са задължителни полета. Моля, опитайте отново!</div>";
             die();
         }
-
+        // пк на админа
         $current_user = $_SESSION["user_id"];
+        // Заявка за редакция на продукта в базата
         $sql = "UPDATE product SET name='".$_POST["name"]."',price='".$_POST["price"]."',type='".$_POST["type"]."',description='".$_POST["description"]."',pic_url='".$_POST["pic_url"]."',user_id='".$current_user."' WHERE id=".$id;
-        if($db->update($sql)) {
+        if($db->exec($sql)) {
+            // След успешно добавяне следва връшане към съответния тип продукти
             if ($_POST["type"] == "bouquet") {
                 header("location: bouquets.php");
             }
@@ -76,12 +85,14 @@
             }
         }
         else {
+            // При грешки
             echo "<div class='alert alert-danger' role='alert'>Нещо се обърка при редакцията на продукта. Моля, опитайте отново!</div>";
         }
     }
 ?>
 <?php
     else:
+        // Ако потребителя е анонимен
         echo "Not allowed";
     endif;
 ?>

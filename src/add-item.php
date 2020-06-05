@@ -1,6 +1,8 @@
 <?php
+    // Страница за добавчне на нови артикули
     ob_start();
     session_start();
+    // Проверка за логнат администратор
     if(!empty($_SESSION)):
         include 'includes/header.inc';
 ?>
@@ -8,10 +10,23 @@
     <?php
         include_once 'lib/db.php';
         $db = new DB();
+        // Типа на артикула
         $type = htmlspecialchars($_GET['type']);
 
     ?>
-    <h4>Добави Артикул в <?php echo $type ?></h4>
+    <h4>
+        Добави Артикул в
+        <?php
+            // визуализиране на името на типа
+            if($type === "bouquet"):
+                print "Букет";
+            elseif ($type === "art_bouquet"):
+                print "Арт букет";
+            else:
+                print "Стайнo растениe";
+            endif;
+        ?>
+    </h4>
     <br>
     <div class="media">
 
@@ -35,7 +50,7 @@
                     <label for="description">Описание</label>
                     <textarea name="description" type="text" class="form-control" rows="5" id="description"></textarea>
                 </div>
-                <button type="button" class="btn btn-primary">Откажи се</button>
+
                 <input type="hidden" id="actualDate" name="actualDate"/>
                 <button type="submit" class="btn btn-primary">Запази</button>
 
@@ -49,16 +64,21 @@
 ?>
 
 <?php
+    // Валидация на формата за добавяне на артикули
     if (!empty($_POST)) {
+        // Проверка на задължителни полета
         if(empty($_POST["name"]) || empty($_POST["price"])) {
             echo "<div class='alert alert-danger' role='alert'>Име и цена са задължителни полета. Моля, опитайте отново!</div>";
             die();
         }
-
+        // пк на админа
         $current_user = $_SESSION["user_id"];
+        // дата
         $createdate =  date('Y-m-d H:i:s');
+        // Заявка за добавяне в базата
         $sql = "INSERT INTO product(name,price,type,description,pic_url,user_id,deleted,created_date) VALUES ('".$_POST["name"]."','".$_POST["price"]."','".$type."' ,'".$_POST["description"]."','".$_POST["pic_url"]."' ,'".$current_user."',FALSE,'".$createdate."' )";
-        if($db->insert($sql)) {
+        if($db->exec($sql)) {
+            // След успешно добавяне следва връшане към съответния тип продукти
             if ($type == "bouquet"){
                 header("location: bouquets.php");
             }
@@ -70,6 +90,7 @@
             }
         }
         else {
+            // При грешки
             echo "<div class='alert alert-danger' role='alert'>Нещо се обърка при добавянето на продукта. Моля, опитайте отново!</div>";
         }
     }
@@ -78,6 +99,7 @@
 
 <?php
     else:
+        // Ако потребителя е анонимен
         echo "Not allowed";
     endif;
 ?>

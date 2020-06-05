@@ -15,15 +15,17 @@
 
     <div class="row">
         <?php
+            // Заявка за извеждане на последните 3 въведени артикула
             include_once 'lib/db.php';
             $db = new DB();
             $bouquets = $db->get("SELECT * FROM product WHERE deleted=FALSE ORDER BY id DESC LIMIT 3");
+            
             if($bouquets):
                 foreach($bouquets as $key => $value ):
         ?>
         <div class="col-sm-3 m-3">
             <div class="card " style="width: 18rem;">
-                <img src="./assets/img/bojur.jpg" class="card-img-top" alt="..." weight="100" height="280">
+                <img src="./assets/img/<?php echo $value["pic_url"]; ?>" class="card-img-top" alt="..." weight="100" height="280">
                 <div class="card-body">
                     <h5 class="card-title"><?php echo $value["name"]; ?></h5>
                     <p class="card-text">Цена:<?php echo $value["price"]; ?></p>
