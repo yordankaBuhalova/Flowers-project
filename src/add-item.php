@@ -71,6 +71,10 @@
             echo "<div class='alert alert-danger' role='alert'>Име и цена са задължителни полета. Моля, опитайте отново!</div>";
             die();
         }
+        if(!file_exists("./assets/img/". $_POST["pic_url"])){
+            echo "<div class='alert alert-danger' role='alert'> Снимката не съществува. Моля, сменете я!</div>";
+            die();
+        }
         // пк на админа
         $current_user = $_SESSION["user_id"];
         // дата

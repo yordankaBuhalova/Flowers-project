@@ -68,6 +68,10 @@
             echo "<div class='alert alert-danger' role='alert'>Име, цена и тип са задължителни полета. Моля, опитайте отново!</div>";
             die();
         }
+        if(!file_exists("./assets/img/". $_POST["pic_url"])){
+            echo "<div class='alert alert-danger' role='alert'> Снимката не съществува. Моля, сменете я!</div>";
+            die();
+        }
         // пк на админа
         $current_user = $_SESSION["user_id"];
         // Заявка за редакция на продукта в базата
