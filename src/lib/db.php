@@ -9,17 +9,11 @@
 
         function __construct() {
             // Взимане на настройки от работната среда за Docker контейнера
-            /**
-            * $this->DB_SERVER = getenv('MYSQL_SERVER');
-            * $this->DB_NAME = getenv('MYSQL_DATABASE');
-            * $this->DB_USER = getenv('MYSQL_USER');
-            * $this->DB_PASS = getenv('MYSQL_PASSWORD');
-            */
-            // статично задаване на настройки в случай на работа извън Docker
-            $this->DB_SERVER = 'localhost:3306';
-            $this->DB_NAME = 'flowers';
-            $this->DB_USER = 'flowers';
-            $this->DB_PASS = 'flowers';
+
+            $this->DB_SERVER = getenv('MYSQL_SERVER');
+            $this->DB_NAME = getenv('MYSQL_DATABASE');
+            $this->DB_USER = getenv('MYSQL_USER');
+            $this->DB_PASS = getenv('MYSQL_PASSWORD');
 
             // Създаване на връзката
             $this->conn = new mysqli($this->DB_SERVER, $this->DB_USER, $this->DB_PASS, $this->DB_NAME);
