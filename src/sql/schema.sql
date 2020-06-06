@@ -64,6 +64,8 @@ ENGINE = InnoDB;
 INSERT INTO user(username, password, email, first_name, last_name, is_admin)
 VALUES('admin', SHA1('admin'), '', 'Administrator', '', 1);
 
+ALTER USER 'flowers'@'%' IDENTIFIED WITH mysql_native_password BY 'flowers';
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
