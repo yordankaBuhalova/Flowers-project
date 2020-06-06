@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,8 +12,9 @@
 </head>
 <body>
     <!-- Image and text -->
+    <div class="container-fluid">
     <nav class="navbar navbar-light navbar-expand-lg nav">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="/">
             Цветарница Златните Божури
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,19 +22,30 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav justify-content-center">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Начало <span class="sr-only">(current)</span></a>
+            <li class="nav-item">
+                <a class="nav-link" href="/">Начало <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Букети</a>
+                <a class="nav-link" href="bouquets.php">Букети</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"> Арт букети</a>
+                <a class="nav-link" href="art-bouquets.php"> Арт букети</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Стайни растения</a>
+                <a class="nav-link" href="room-plants.php">Стайни растения</a>
             </li>
+            <?php
+                if(!empty($_SESSION)):
+            ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="orders.php">Поръчки</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="logout.php">Изход</a>
+                </li>
+            <?php
+                endif;
+            ?>
             </ul>
         </div>
-
-    </nav>
+    </nav></div>
